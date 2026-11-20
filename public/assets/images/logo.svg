@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="180" viewBox="0 0 760 180" fill="none">
+  <rect x="10" y="18" width="156" height="144" rx="28" fill="#EFF6FF"/>
+  <g stroke="#2563EB" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="38" y="28" width="96" height="114" rx="8"/>
+    <rect x="50" y="38" width="72" height="80" rx="4"/>
+    <path d="M50 50H122"/>
+    <path d="M50 60H122"/>
+    <path d="M50 70H122"/>
+    <path d="M50 80H122"/>
+    <path d="M78 80V109"/>
+    <circle cx="91" cy="109" r="4"/>
+    <path d="M62 82H78V98H62Z"/>
+    <path d="M72 98V116H48"/>
+    <path d="M105 105L118 94H129L139 114H103L105 105Z"/>
+    <path d="M120 114V132"/>
+    <path d="M112 132H128"/>
+    <path d="M38 124H134"/>
+    <path d="M28 70H38"/>
+    <path d="M134 70H144"/>
+    <path d="M34 144H138"/>
+    <path d="M50 144V164"/>
+    <path d="M66 144V164"/>
+    <path d="M106 144V164"/>
+    <path d="M122 144V164"/>
+    <path d="M50 164C56 158 56 150 50 144"/>
+    <path d="M66 164C72 158 72 150 66 144"/>
+    <path d="M106 164C112 158 112 150 106 144"/>
+    <path d="M122 164C128 158 128 150 122 144"/>
+    <rect x="76" y="140" width="24" height="16" rx="3"/>
+  </g>
+  <text x="192" y="79" fill="#1E3A8A" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="1.5">BEST INTERSTATE</text>
+  <text x="192" y="126" fill="#2563EB" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="800">MOVING + STORAGE</text>
+</svg>

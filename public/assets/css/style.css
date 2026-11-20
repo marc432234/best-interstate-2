@@ -1,0 +1,64 @@
+/*
+Theme Name: Moving
+
+-------------------------------------------------------------- */
+
+@media only screen and (max-width: 934px) {
+  #multo {
+    display: none;
+  }
+}
+
+.page {
+	padding: 50px;
+	width: 100%;
+}
+
+.page .page-title {
+	color: #253846;
+	font: 900 36px 'Lato', sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.page .page-title::after {
+	background: url('../images/header-text_bg.png') no-repeat 0 bottom;
+	content: '';
+	padding: 20px;
+}
+
+.page .page-title span {
+	background: url('../images/header-text2_bg.svg') no-repeat 0 bottom;
+	padding: 20px;
+}
+
+@media only screen and (max-width: 1010px) {
+	.nf-form-cont {
+		margin: 0 !important;
+	}
+}
+
+.nf-form-content {
+	margin-top: 10px !important;
+}
+
+/*
+     FILE ARCHIVED ON 02:02:18 Feb 21, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 18:22:04 Mar 23, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.508
+  exclusion.robots: 0.022
+  exclusion.robots.policy: 0.013
+  esindex: 0.009
+  cdx.remote: 57.822
+  LoadShardBlock: 155.272 (3)
+  PetaboxLoader3.resolve: 339.792 (4)
+  PetaboxLoader3.datanode: 115.448 (4)
+  load_resource: 322.508
+*/
