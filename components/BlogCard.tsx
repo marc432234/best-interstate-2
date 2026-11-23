@@ -1,12 +1,21 @@
 import { formatPostDate } from "@/lib/blog-utils";
 import type { BlogPost } from "@/lib/blog-utils";
+import OptimizedImage from "./OptimizedImage";
+import { IMAGE_SIZES } from "@/lib/image-sizes";
 
 export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <article className="blog-card">
       <a href={`/blog/${post.slug}/`}>
         {post.featured_image ? (
-          <img src={post.featured_image} alt={post.title} className="blog-card-image" />
+          <OptimizedImage
+            src={post.featured_image}
+            alt={post.title}
+            width={800}
+            height={450}
+            sizes={IMAGE_SIZES.blogCard}
+            className="blog-card-image"
+          />
         ) : (
           <div className="blog-card-image blog-card-image-placeholder">
             <span>Best Interstate Moving + Storage</span>

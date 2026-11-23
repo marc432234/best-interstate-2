@@ -1,3 +1,6 @@
+import OptimizedImage from "./OptimizedImage";
+import { IMAGE_SIZES } from "@/lib/image-sizes";
+
 const LOGO = "/assets/images/BEST-INTERSTATE-MOVING-AND-STORAGE_Logo-V2.png";
 
 const movingSolutions = [
@@ -63,9 +66,12 @@ export default function Footer() {
           <div className="footerCol">
             <div className="footerLogoWrapper" style={{ marginBottom: 30 }}>
               <a href="/">
-                <img
+                <OptimizedImage
                   src={LOGO}
                   alt="Best Interstate Moving + Storage"
+                  width={240}
+                  height={80}
+                  sizes={IMAGE_SIZES.footerLogo}
                   style={{
                     height: 60,
                     width: "auto",
@@ -80,10 +86,22 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener"
               >
-                <img src="/assets/images/footer-img1.png" alt="MyMovingReviews" />
+                <OptimizedImage
+                  src="/assets/images/footer-img1.png"
+                  alt="MyMovingReviews"
+                  width={109}
+                  height={57}
+                  sizes={IMAGE_SIZES.trustBadge}
+                />
               </a>
               <a href="#!" target="_blank" rel="noopener">
-                <img src="/assets/images/footer-img2.png" alt="Trustwave" />
+                <OptimizedImage
+                  src="/assets/images/footer-img2.png"
+                  alt="Trustwave"
+                  width={105}
+                  height={52}
+                  sizes={IMAGE_SIZES.trustBadge}
+                />
               </a>
             </div>
             <div

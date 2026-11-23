@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import OptimizedImage from "./OptimizedImage";
+import { IMAGE_SIZES } from "@/lib/image-sizes";
 
 const LOGO = "/assets/images/BEST-INTERSTATE-MOVING-AND-STORAGE_Logo-V2.png";
 
@@ -65,9 +67,12 @@ export default function Navbar() {
         <div className="row">
           <div className="navbar-header">
             <a className="navbar-brand" href="/">
-              <img
+              <OptimizedImage
                 src={LOGO}
                 alt="Best Interstate Moving + Storage"
+                width={260}
+                height={86}
+                sizes={IMAGE_SIZES.logoMobile}
                 style={{ height: 82 }}
               />
             </a>
@@ -104,7 +109,13 @@ export default function Navbar() {
             <ul id="menu-menu" className="nav-list">
               <li className="nav-logo-item">
                 <a className="nav-logo-link" href="/">
-                  <img src={LOGO} alt="Best Interstate Moving + Storage" />
+                  <OptimizedImage
+                    src={LOGO}
+                    alt="Best Interstate Moving + Storage"
+                    width={240}
+                    height={80}
+                    sizes={IMAGE_SIZES.logoDesktop}
+                  />
                 </a>
               </li>
               <li className={isActive(pathname, "/") ? "active" : ""}>
@@ -170,9 +181,12 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between p-5 border-b border-slate-100">
                 <a href="/" onClick={closeMobile}>
-                  <img
+                  <OptimizedImage
                     src={LOGO}
                     alt="Best Interstate Moving + Storage"
+                    width={180}
+                    height={60}
+                    sizes={IMAGE_SIZES.logoDrawer}
                     style={{ height: 42 }}
                   />
                 </a>

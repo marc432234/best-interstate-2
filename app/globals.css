@@ -50,3 +50,7 @@ textarea,
   max-width: 100% !important;
   width: 1650px !important;
 }
+
+.page-content img {
+  max-width: 100%;
+}

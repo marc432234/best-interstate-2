@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogCard from "@/components/BlogCard";
+import OptimizedImage from "@/components/OptimizedImage";
+import { IMAGE_SIZES } from "@/lib/image-sizes";
 import {
   getBlogCategories,
   getPublishedPostBySlug,
@@ -98,10 +100,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         </header>
 
         {(post.featured_image || post.meta_image) && (
-          <img
+          <OptimizedImage
             className="blog-post-hero"
             src={post.meta_image || post.featured_image || ""}
             alt={post.title}
+            width={1080}
+            height={608}
+            sizes={IMAGE_SIZES.blogHero}
           />
         )}
 

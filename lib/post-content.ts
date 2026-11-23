@@ -53,7 +53,7 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
   allowedAttributes: {
     "*": ["style"],
     a: ["href", "target", "rel"],
-    img: ["src", "alt", "title", "width", "height"],
+    img: ["src", "alt", "title", "width", "height", "loading", "decoding"],
     iframe: ["src", "title", "allow", "allowfullscreen", "width", "height"],
     col: ["span"],
     td: ["colspan", "rowspan"],
@@ -70,6 +70,10 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
     a: sanitizeHtml.simpleTransform("a", {
       rel: "noopener noreferrer",
       target: "_blank",
+    }),
+    img: (_tagName, attribs) => ({
+      tagName: "img",
+      attribs: { ...attribs, loading: "lazy", decoding: "async" },
     }),
   },
 };

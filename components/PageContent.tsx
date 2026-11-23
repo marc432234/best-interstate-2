@@ -29,6 +29,18 @@ const quoteFormVariants: Record<string, string> = {
   ),
 };
 
+function addLazyLoading(html: string) {
+  return html.replace(/<img\b([^>]*)>/gi, (match, attributes: string) => {
+    const cleanAttributes = attributes.replace(/\s*\/\s*$/, "");
+    const extras = [
+      /\bloading\s*=/.test(cleanAttributes) ? "" : ' loading="lazy"',
+      /\bdecoding\s*=/.test(cleanAttributes) ? "" : ' decoding="async"',
+    ].join("");
+
+    return extras ? `<img${cleanAttributes}${extras} />` : match;
+  });
+}
+
 export default function PageContent({ slug }: { slug: string }) {
   const filePath = path.join(contentDir, `${slug}.html`);
   let html = fs.readFileSync(filePath, "utf8");
@@ -41,5 +53,11 @@ export default function PageContent({ slug }: { slug: string }) {
     throw new Error(`Unreplaced quote form token in ${slug}.html`);
   }
 
-  return <div suppressHydrationWarning dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <div
+      className="page-content"
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{ __html: addLazyLoading(html) }}
+    />
+  );
 }
