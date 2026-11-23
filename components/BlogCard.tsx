@@ -7,9 +7,9 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <article className="blog-card">
       <a href={`/blog/${post.slug}/`}>
-        {post.featured_image ? (
+        {post.meta_image || post.featured_image ? (
           <OptimizedImage
-            src={post.featured_image}
+            src={post.meta_image || post.featured_image || ""}
             alt={post.title}
             width={800}
             height={450}

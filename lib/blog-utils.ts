@@ -20,8 +20,6 @@ export type BlogPost = {
   status: BlogPostStatus;
   published_at: string | null;
   featured_image: string | null;
-  meta_title: string | null;
-  meta_description: string | null;
   meta_image: string | null;
   no_index: boolean;
   created_at?: string;

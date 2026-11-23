@@ -269,35 +269,12 @@ export default function RichTextPostEditor({
       </div>
 
       <ImageUploadField
-        key={`featured-${post?.id || "new"}`}
-        name="featured_image"
-        label="Featured Image URL / Meta Image"
-        defaultValue={post?.featured_image || ""}
-        hint="Used as the meta image when a separate meta image is not provided."
+        key={`meta-${post?.id || "new"}`}
+        name="meta_image"
+        label="Meta Image"
+        defaultValue={post?.meta_image || post?.featured_image || ""}
+        hint="Used as the post hero, listing card, and social preview image."
       />
-
-      <div className="admin-form-row">
-        <label>
-          <span>Meta Title</span>
-          <input
-            type="text"
-            name="meta_title"
-            defaultValue={post?.meta_title || ""}
-            placeholder={title || "SEO title"}
-          />
-        </label>
-        <ImageUploadField
-          key={`meta-${post?.id || "new"}`}
-          name="meta_image"
-          label="Meta Image"
-          defaultValue={post?.meta_image || ""}
-        />
-      </div>
-
-      <label>
-        <span>Meta Description</span>
-        <textarea name="meta_description" defaultValue={post?.meta_description || ""} />
-      </label>
 
       <label className="admin-checkbox">
         <input type="checkbox" name="no_index" defaultChecked={Boolean(post?.no_index)} />

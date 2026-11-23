@@ -45,7 +45,7 @@ export async function savePostAction(formData: FormData) {
   const statusRaw = String(formData.get("status") || "draft");
   const status = statusRaw === "published" || statusRaw === "archived" ? statusRaw : "draft";
   const excerpt = clean(formData.get("excerpt")) || htmlToExcerpt(contentHtml);
-  const featuredImage = clean(formData.get("featured_image"));
+  const metaImage = clean(formData.get("meta_image"));
   const publishedAtInput = clean(formData.get("published_at"));
   const publishedAt =
     status === "published"
@@ -62,10 +62,8 @@ export async function savePostAction(formData: FormData) {
     category_id: clean(formData.get("category_id")),
     status,
     published_at: publishedAt,
-    featured_image: featuredImage,
-    meta_title: clean(formData.get("meta_title")) || title,
-    meta_description: clean(formData.get("meta_description")) || excerpt,
-    meta_image: clean(formData.get("meta_image")) || featuredImage,
+    featured_image: metaImage,
+    meta_image: metaImage,
     no_index: formData.get("no_index") === "on",
   };
 

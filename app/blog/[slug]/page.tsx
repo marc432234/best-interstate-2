@@ -31,11 +31,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = post.meta_title || post.title;
-  const description =
-    post.meta_description ||
-    post.excerpt ||
-    postContentExcerpt(post);
+  const title = post.title;
+  const description = post.excerpt || postContentExcerpt(post);
   const image = post.meta_image || post.featured_image;
   const canonical = `${SITE_URL}/blog/${post.slug}/`;
 
@@ -99,7 +96,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         </header>
 
-        {(post.featured_image || post.meta_image) && (
+        {(post.meta_image || post.featured_image) && (
           <OptimizedImage
             className="blog-post-hero"
             src={post.meta_image || post.featured_image || ""}
