@@ -26,7 +26,8 @@ You can also add the variables manually in the Vercel dashboard. No `vercel.json
 
 ### Supabase project checklist
 
-- Run `supabase/schema.sql` in **SQL Editor → New query** to create tables, RLS policies and seed content.
+- Run `supabase/schema.sql` in **SQL Editor → New query** to create tables, grants, the public `site-images` Storage bucket and RLS policies, plus seed content. Re-run it after updates.
 - Create an admin login at **Authentication → Users → Add user** (email + password). `/login` uses Supabase Auth and writes require the `authenticated` role.
+- Use the **Upload** control next to featured/meta image fields in the dashboard to store images in the `site-images` bucket; the resulting public URL is saved with the page or post.
 - Add your production domain to **Authentication → URL Configuration → Site URL** and **Redirect URLs**.
 - Redeploy after changing Vercel environment variables.

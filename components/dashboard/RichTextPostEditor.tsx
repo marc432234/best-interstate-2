@@ -9,6 +9,7 @@ import { TextAlign } from "@tiptap/extension-text-align";
 import { TableKit } from "@tiptap/extension-table";
 import { marked } from "marked";
 import { slugify, type BlogCategory, type BlogPost } from "@/lib/blog-utils";
+import ImageUploadField from "./ImageUploadField";
 
 type EditorAction = (formData: FormData) => void | Promise<void>;
 
@@ -267,18 +268,13 @@ export default function RichTextPostEditor({
         </label>
       </div>
 
-      <label>
-        <span>Featured Image URL / Meta Image</span>
-        <input
-          type="url"
-          name="featured_image"
-          defaultValue={post?.featured_image || ""}
-          placeholder="https://..."
-        />
-        <span className="admin-form-note">
-          Used as the meta image when a separate meta image is not provided.
-        </span>
-      </label>
+      <ImageUploadField
+        key={`featured-${post?.id || "new"}`}
+        name="featured_image"
+        label="Featured Image URL / Meta Image"
+        defaultValue={post?.featured_image || ""}
+        hint="Used as the meta image when a separate meta image is not provided."
+      />
 
       <div className="admin-form-row">
         <label>
@@ -290,15 +286,12 @@ export default function RichTextPostEditor({
             placeholder={title || "SEO title"}
           />
         </label>
-        <label>
-          <span>Meta Image</span>
-          <input
-            type="url"
-            name="meta_image"
-            defaultValue={post?.meta_image || ""}
-            placeholder="https://..."
-          />
-        </label>
+        <ImageUploadField
+          key={`meta-${post?.id || "new"}`}
+          name="meta_image"
+          label="Meta Image"
+          defaultValue={post?.meta_image || ""}
+        />
       </div>
 
       <label>

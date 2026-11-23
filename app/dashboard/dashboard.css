@@ -239,6 +239,45 @@
   font-weight: 700;
 }
 
+.admin-image-field {
+  display: grid;
+  gap: 7px;
+}
+
+.admin-field-label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-image-upload-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-image-upload-row input[type="file"] {
+  font-size: 13px;
+  max-width: 100%;
+}
+
+.admin-image-preview {
+  background: #f1f5f9;
+  border: 1px solid var(--admin-line);
+  border-radius: 9px;
+  display: block;
+  height: auto;
+  max-height: 220px;
+  max-width: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+.admin-image-error {
+  margin-bottom: 0;
+}
+
 .admin-form input[type="text"],
 .admin-form input[type="email"],
 .admin-form input[type="password"],

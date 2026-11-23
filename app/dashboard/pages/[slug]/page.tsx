@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPageMetaBySlug } from "@/lib/page-meta";
 import { getSitePages } from "@/lib/site-pages";
+import ImageUploadField from "@/components/dashboard/ImageUploadField";
 import { savePageMetaAction } from "./actions";
 
 export default async function EditPageMeta({
@@ -80,18 +81,13 @@ export default async function EditPageMeta({
             />
           </label>
 
-          <label>
-            <span>Featured Image / OG Image</span>
-            <input
-              type="url"
-              name="featured_img"
-              defaultValue={row?.featured_img || ""}
-              placeholder="https://..."
-            />
-            <span className="admin-form-note">
-              Used for the featured, meta, Open Graph, and Twitter preview image.
-            </span>
-          </label>
+          <ImageUploadField
+            key={slug}
+            name="featured_img"
+            label="Featured Image / OG Image"
+            defaultValue={row?.featured_img || ""}
+            hint="Used for the featured, meta, Open Graph, and Twitter preview image."
+          />
 
           <label className="admin-checkbox">
             <input

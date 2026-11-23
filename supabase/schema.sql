@@ -277,3 +277,36 @@ grant usage, select on all sequences in schema public to authenticated, service_
 alter default privileges in schema public grant select on tables to anon;
 alter default privileges in schema public grant select, insert, update, delete on tables to authenticated, service_role;
 alter default privileges in schema public grant usage, select on sequences to authenticated, service_role;
+
+insert into storage.buckets (id, name, public)
+values ('site-images', 'site-images', true)
+on conflict (id) do update set public = excluded.public;
+
+drop policy if exists "site_images_public_select" on storage.objects;
+create policy "site_images_public_select"
+on storage.objects for select
+to public
+using (bucket_id = 'site-images');
+
+drop policy if exists "site_images_authenticated_insert" on storage.objects;
+create policy "site_images_authenticated_insert"
+on storage.objects for insert
+to authenticated
+with check (bucket_id = 'site-images' and auth.role() = 'authenticated');
+
+drop policy if exists "site_images_authenticated_update" on storage.objects;
+create policy "site_images_authenticated_update"
+on storage.objects for update
+to authenticated
+using (bucket_id = 'site-images' and auth.role() = 'authenticated')
+with check (bucket_id = 'site-images' and auth.role() = 'authenticated');
+
+drop policy if exists "site_images_authenticated_delete" on storage.objects;
+create policy "site_images_authenticated_delete"
+on storage.objects for delete
+to authenticated
+using (bucket_id = 'site-images' and auth.role() = 'authenticated');
+
+grant usage on schema storage to anon, authenticated, service_role;
+grant select on storage.objects to anon;
+grant select, insert, update, delete on storage.objects to authenticated, service_role;

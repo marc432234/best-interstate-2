@@ -2,6 +2,11 @@
 const nextConfig = {
   htmlLimitedBots: /.*/,
   trailingSlash: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "6mb",
+    },
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
