@@ -1,7 +1,4 @@
 (function () {
-  var ZAPIER_QUOTE_WEBHOOK =
-    "https://hooks.zapier.com/hooks/catch/15991773/45r5mkp/";
-
   function closeQuotePopup(popup) {
     if (!popup || !popup.parentNode) {
       return;
@@ -737,13 +734,15 @@
         submitButton.disabled = true;
       }
 
-      fetch(ZAPIER_QUOTE_WEBHOOK, {
+      fetch("/api/quote/", {
         method: "POST",
-        mode: "no-cors",
         cache: "no-store",
         body: new URLSearchParams(payload),
       })
-        .then(function () {
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Webhook request failed");
+          }
           form.reset();
           applyMoveType("house");
           showQuotePopup(

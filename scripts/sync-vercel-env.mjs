@@ -3,7 +3,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const envFile = resolve(process.argv[2] ?? ".env.local");
-const keys = ["SUPABASE_URL", "SUPABASE_ANON_KEY", "SUPABASE_SERVICE_ROLE_KEY"];
+const keys = [
+  "SUPABASE_URL",
+  "SUPABASE_ANON_KEY",
+  "SUPABASE_SERVICE_ROLE_KEY",
+  "ZAPIER_QUOTE_WEBHOOK",
+];
 const targets = ["production", "preview", "development"];
 
 function parseEnvFile(contents) {
@@ -31,7 +36,7 @@ function parseEnvFile(contents) {
 }
 
 if (!existsSync(envFile)) {
-  console.error(`Missing ${envFile}. Copy .env.example to .env.local and fill in your Supabase values first.`);
+  console.error(`Missing ${envFile}. Copy .env.example to .env.local and fill in your Supabase and Zapier values first.`);
   process.exit(1);
 }
 
@@ -41,7 +46,7 @@ const selected = keys.filter(
 );
 
 if (selected.length === 0) {
-  console.error(`No Supabase credentials found in ${envFile}.`);
+  console.error(`No environment values found in ${envFile}.`);
   process.exit(1);
 }
 

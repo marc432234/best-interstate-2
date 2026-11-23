@@ -12,6 +12,16 @@ The app reads Supabase config only on the server. Add these in **Vercel → your
 
 `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are still accepted as fallbacks in `lib/supabase.ts`, `lib/supabase-server.ts` and `middleware.ts`, but the server-side names above are preferred.
 
+## Zapier webhook for Vercel
+
+The quote form posts to `/api/quote/`. That route reads `ZAPIER_QUOTE_WEBHOOK` on the server and forwards the submission, so the webhook URL is no longer in the public JavaScript.
+
+| Variable | Required | Where to find it |
+| --- | --- | --- |
+| `ZAPIER_QUOTE_WEBHOOK` | Yes | Zapier → your Zap → **Webhook by Zapier → Catch Hook → Copy URL**. |
+
+Set it in **Vercel → Project Settings → Environment Variables** for Production, Preview and Development, or add it to `.env.local` and run `npm run env:sync:vercel`.
+
 ### Local development
 
 1. Copy the template: `cp .env.example .env.local` (PowerShell: `Copy-Item .env.example .env.local`) and fill in the values.
