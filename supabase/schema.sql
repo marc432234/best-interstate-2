@@ -263,3 +263,17 @@ create policy "blog_posts_delete_admin"
 on public.blog_posts for delete
 to authenticated
 using (true);
+
+grant usage on schema public to anon, authenticated, service_role;
+
+grant select on public.page_meta, public.blog_categories, public.blog_posts to anon;
+
+grant select, insert, update, delete
+on public.page_meta, public.blog_categories, public.blog_posts
+to authenticated, service_role;
+
+grant usage, select on all sequences in schema public to authenticated, service_role;
+
+alter default privileges in schema public grant select on tables to anon;
+alter default privileges in schema public grant select, insert, update, delete on tables to authenticated, service_role;
+alter default privileges in schema public grant usage, select on sequences to authenticated, service_role;
