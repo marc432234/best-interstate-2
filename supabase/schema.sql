@@ -9,10 +9,26 @@ create table if not exists public.page_meta (
   updated_at timestamptz not null default now()
 );
 
-alter table public.page_meta add column if not exists featured_img text;
+alter table public.page_meta
+  add column if not exists slug text,
+  add column if not exists title text,
+  add column if not exists description text,
+  add column if not exists keywords text,
+  add column if not exists canonical text,
+  add column if not exists featured_img text,
+  add column if not exists no_index boolean not null default false,
+  add column if not exists updated_at timestamptz not null default now();
 
 do $$
 begin
+  if not exists (
+    select 1 from pg_index i
+    where i.indrelid = 'public.page_meta'::regclass and i.indisprimary
+  ) then
+    update public.page_meta set slug = md5(random()::text) where slug is null;
+    alter table public.page_meta add primary key (slug);
+  end if;
+
   if exists (
     select 1 from information_schema.columns
     where table_schema = 'public' and table_name = 'page_meta' and column_name = 'og_title'
@@ -170,6 +186,25 @@ create table if not exists public.blog_categories (
   updated_at timestamptz not null default now()
 );
 
+alter table public.blog_categories
+  add column if not exists id uuid default gen_random_uuid(),
+  add column if not exists name text not null default '',
+  add column if not exists slug text,
+  add column if not exists description text,
+  add column if not exists created_at timestamptz not null default now(),
+  add column if not exists updated_at timestamptz not null default now();
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_index i
+    where i.indrelid = 'public.blog_categories'::regclass and i.indisprimary
+  ) then
+    update public.blog_categories set id = gen_random_uuid() where id is null;
+    alter table public.blog_categories add primary key (id);
+  end if;
+end $$;
+
 drop trigger if exists blog_categories_set_updated_at on public.blog_categories;
 create trigger blog_categories_set_updated_at
 before update on public.blog_categories
@@ -221,7 +256,44 @@ create table if not exists public.blog_posts (
   updated_at timestamptz not null default now()
 );
 
-alter table public.blog_posts add column if not exists content_html text not null default '';
+alter table public.blog_posts
+  add column if not exists id uuid default gen_random_uuid(),
+  add column if not exists title text not null default '',
+  add column if not exists slug text,
+  add column if not exists excerpt text,
+  add column if not exists content_markdown text not null default '',
+  add column if not exists content_html text not null default '',
+  add column if not exists category_id uuid,
+  add column if not exists status text not null default 'draft',
+  add column if not exists published_at timestamptz,
+  add column if not exists featured_image text,
+  add column if not exists meta_title text,
+  add column if not exists meta_description text,
+  add column if not exists meta_image text,
+  add column if not exists no_index boolean not null default false,
+  add column if not exists created_at timestamptz not null default now(),
+  add column if not exists updated_at timestamptz not null default now();
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname = 'blog_posts_status_check'
+      and conrelid = 'public.blog_posts'::regclass
+  ) then
+    alter table public.blog_posts
+      add constraint blog_posts_status_check
+      check (status in ('draft', 'published', 'archived'));
+  end if;
+
+  if not exists (
+    select 1 from pg_index i
+    where i.indrelid = 'public.blog_posts'::regclass and i.indisprimary
+  ) then
+    update public.blog_posts set id = gen_random_uuid() where id is null;
+    alter table public.blog_posts add primary key (id);
+  end if;
+end $$;
 
 drop trigger if exists blog_posts_set_updated_at on public.blog_posts;
 create trigger blog_posts_set_updated_at
