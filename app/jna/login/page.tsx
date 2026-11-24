@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getDashboardUser } from "@/lib/supabase-server";
 import { signInAction } from "./actions";
-import "../dashboard/dashboard.css";
+import "@/app/dashboard/dashboard.css";
 
 export const dynamic = "force-dynamic";
 

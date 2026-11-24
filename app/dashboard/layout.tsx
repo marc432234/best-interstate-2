@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { signOutAction } from "@/app/login/actions";
+import { signOutAction } from "@/app/jna/login/actions";
 import { getDashboardUser } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
 import "./dashboard.css";
@@ -25,7 +25,7 @@ export default async function DashboardLayout({
 }) {
   const user = await getDashboardUser();
   if (!user) {
-    redirect("/login");
+    redirect("/jna/login");
   }
 
   return (

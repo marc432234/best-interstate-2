@@ -1,3 +1,4 @@
+import DeleteConfirmForm from "@/components/dashboard/DeleteConfirmForm";
 import { formatPostDate } from "@/lib/blog-utils";
 import { getBlogCategories, getBlogPosts } from "@/lib/blog-data";
 import { deletePostAction } from "./actions";
@@ -70,13 +71,14 @@ export default async function DashboardBlogPage({
                         <a href={`/blog/${post.slug}/`} target="_blank">
                           View
                         </a>
-                        <form action={deletePostAction} className="admin-inline-form">
-                          <input type="hidden" name="id" value={post.id} />
-                          <input type="hidden" name="slug" value={post.slug} />
-                          <button type="submit" className="admin-button admin-button-danger">
-                            Delete
-                          </button>
-                        </form>
+                        <DeleteConfirmForm
+                          action={deletePostAction}
+                          fields={[
+                            { name: "id", value: post.id },
+                            { name: "slug", value: post.slug },
+                          ]}
+                          itemLabel={post.title}
+                        />
                       </div>
                     </td>
                   </tr>

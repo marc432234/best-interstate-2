@@ -1,3 +1,4 @@
+import DeleteConfirmForm from "@/components/dashboard/DeleteConfirmForm";
 import { deletePageMetaAction } from "./[slug]/actions";
 import { getPageMetaRows } from "@/lib/page-meta";
 import { getSitePages } from "@/lib/site-pages";
@@ -58,12 +59,12 @@ export default async function DashboardPagesPage({
                           Edit
                         </a>
                         {row ? (
-                          <form action={deletePageMetaAction} className="admin-inline-form">
-                            <input type="hidden" name="slug" value={page.slug} />
-                            <button type="submit" className="admin-button admin-button-danger">
-                              Remove
-                            </button>
-                          </form>
+                          <DeleteConfirmForm
+                            action={deletePageMetaAction}
+                            fields={[{ name: "slug", value: page.slug }]}
+                            itemLabel={`SEO override for ${page.label}`}
+                            buttonLabel="Remove"
+                          />
                         ) : null}
                       </div>
                     </td>

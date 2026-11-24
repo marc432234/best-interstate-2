@@ -1,3 +1,4 @@
+import DeleteConfirmForm from "@/components/dashboard/DeleteConfirmForm";
 import { getBlogCategories, getBlogPosts } from "@/lib/blog-data";
 import { deleteCategoryAction, saveCategoryAction } from "@/app/dashboard/blog/actions";
 
@@ -72,12 +73,11 @@ export default async function DashboardCategoriesPage({
                     <td>
                       <div className="admin-actions">
                         <a href={`/dashboard/categories/${category.id}`}>Edit</a>
-                        <form action={deleteCategoryAction} className="admin-inline-form">
-                          <input type="hidden" name="id" value={category.id} />
-                          <button type="submit" className="admin-button admin-button-danger">
-                            Delete
-                          </button>
-                        </form>
+                        <DeleteConfirmForm
+                          action={deleteCategoryAction}
+                          fields={[{ name: "id", value: category.id }]}
+                          itemLabel={category.name}
+                        />
                       </div>
                     </td>
                   </tr>

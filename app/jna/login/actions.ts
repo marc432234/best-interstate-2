@@ -8,17 +8,17 @@ export async function signInAction(formData: FormData) {
   const password = String(formData.get("password") || "");
 
   if (!email || !password) {
-    redirect("/login?error=Email%20and%20password%20are%20required");
+    redirect("/jna/login?error=Email%20and%20password%20are%20required");
   }
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    redirect("/login?error=Supabase%20environment%20variables%20are%20missing");
+    redirect("/jna/login?error=Supabase%20environment%20variables%20are%20missing");
   }
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}`);
+    redirect(`/jna/login?error=${encodeURIComponent(error.message)}`);
   }
 
   redirect("/dashboard");
@@ -29,5 +29,5 @@ export async function signOutAction() {
   if (supabase) {
     await supabase.auth.signOut();
   }
-  redirect("/login");
+  redirect("/jna/login");
 }
