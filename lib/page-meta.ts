@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE, getPageHeroImage } from "./page-hero";
 import { getSupabaseClient } from "./supabase";
 
 export type PageMetaRow = {
@@ -40,6 +41,11 @@ function getFallbackImage(fallback: Metadata): string | undefined {
   return first.url ? String(first.url) : undefined;
 }
 
+function cleanImageUrl(value: string | null | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed || undefined;
+}
+
 export async function getPageMetadata(
   slug: string,
   fallback: Metadata,
@@ -72,7 +78,11 @@ export async function getPageMetadata(
     (typeof fallback.alternates?.canonical === "string"
       ? fallback.alternates.canonical
       : undefined);
-  const image = data.featured_img || getFallbackImage(fallback);
+  const image =
+    cleanImageUrl(data.featured_img) ||
+    getFallbackImage(fallback) ||
+    getPageHeroImage(slug) ||
+    DEFAULT_OG_IMAGE;
 
   const merged: Metadata = {
     ...fallback,
@@ -87,13 +97,18 @@ export async function getPageMetadata(
       ...toObject(fallback.openGraph),
       ...(title ? { title } : {}),
       ...(description ? { description } : {}),
-      ...(image ? { images: [{ url: image }] } : {}),
+      images: [
+        {
+          url: image,
+          alt: title || "Best Interstate Moving + Storage",
+        },
+      ],
     },
     twitter: {
       ...toObject(fallback.twitter),
       ...(title ? { title } : {}),
       ...(description ? { description } : {}),
-      ...(image ? { images: [image] } : {}),
+      images: [image],
     },
   };
 

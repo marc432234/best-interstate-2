@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import BlogCard from "@/components/BlogCard";
 import OptimizedImage from "@/components/OptimizedImage";
 import { IMAGE_SIZES } from "@/lib/image-sizes";
+import { DEFAULT_OG_IMAGE } from "@/lib/page-hero";
 import {
   getBlogCategories,
   getPublishedPostBySlug,
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = post.title;
   const description = post.excerpt || postContentExcerpt(post);
-  const image = post.meta_image || post.featured_image;
+  const image = post.meta_image?.trim() || post.featured_image?.trim() || DEFAULT_OG_IMAGE;
   const canonical = `${SITE_URL}/blog/${post.slug}/`;
 
   return {
@@ -52,13 +53,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       locale: "en_US",
       type: "article",
       publishedTime: post.published_at || undefined,
-      images: image ? [{ url: image }] : undefined,
+      images: [{ url: image, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: image ? [image] : undefined,
+      images: [image],
     },
   };
 }
