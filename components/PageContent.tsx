@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { getLocalImageSize } from "@/lib/local-image-size";
 
 const contentDir = path.join(process.cwd(), "content");
 const quoteFormSource = fs.readFileSync(
@@ -29,15 +30,31 @@ const quoteFormVariants: Record<string, string> = {
   ),
 };
 
-function addLazyLoading(html: string) {
+function prepareImages(html: string) {
   return html.replace(/<img\b([^>]*)>/gi, (match, attributes: string) => {
     const cleanAttributes = attributes.replace(/\s*\/\s*$/, "");
     const extras = [
       /\bloading\s*=/.test(cleanAttributes) ? "" : ' loading="lazy"',
       /\bdecoding\s*=/.test(cleanAttributes) ? "" : ' decoding="async"',
-    ].join("");
+    ];
 
-    return extras ? `<img${cleanAttributes}${extras} />` : match;
+    const hasWidth = /\bwidth\s*=/.test(cleanAttributes);
+    const hasHeight = /\bheight\s*=/.test(cleanAttributes);
+    if (!hasWidth || !hasHeight) {
+      const srcMatch = cleanAttributes.match(
+        /\bsrc\s*=\s*(?:"([^"]*)"|'([^']*)')/i,
+      );
+      const src = srcMatch?.[1] || srcMatch?.[2];
+      const size = src ? getLocalImageSize(src) : null;
+      if (size) {
+        if (!hasWidth) extras.push(` width="${size[0]}"`);
+        if (!hasHeight) extras.push(` height="${size[1]}"`);
+      }
+    }
+
+    return extras.some(Boolean)
+      ? `<img${cleanAttributes}${extras.join("")} />`
+      : match;
   });
 }
 
@@ -57,7 +74,7 @@ export default function PageContent({ slug }: { slug: string }) {
     <div
       className="page-content"
       suppressHydrationWarning
-      dangerouslySetInnerHTML={{ __html: addLazyLoading(html) }}
+      dangerouslySetInnerHTML={{ __html: prepareImages(html) }}
     />
   );
 }
