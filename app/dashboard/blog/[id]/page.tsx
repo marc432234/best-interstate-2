@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import RichTextPostEditor from "@/components/dashboard/RichTextPostEditor";
 import { getBlogCategories, getBlogPostById } from "@/lib/blog-data";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { savePostAction } from "../actions";
 
 export default async function EditBlogPostPage({
@@ -12,9 +13,10 @@ export default async function EditBlogPostPage({
 }) {
   const { id } = await params;
   const query = await searchParams;
+  const supabase = await createSupabaseServerClient();
   const [post, categories] = await Promise.all([
-    getBlogPostById(id),
-    getBlogCategories(),
+    getBlogPostById(id, supabase),
+    getBlogCategories(supabase),
   ]);
 
   if (!post) {

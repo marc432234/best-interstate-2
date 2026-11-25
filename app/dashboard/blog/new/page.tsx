@@ -1,5 +1,6 @@
 import RichTextPostEditor from "@/components/dashboard/RichTextPostEditor";
 import { getBlogCategories } from "@/lib/blog-data";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { savePostAction } from "../actions";
 
 export default async function NewBlogPostPage({
@@ -8,7 +9,8 @@ export default async function NewBlogPostPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const query = await searchParams;
-  const categories = await getBlogCategories();
+  const supabase = await createSupabaseServerClient();
+  const categories = await getBlogCategories(supabase);
 
   return (
     <div>

@@ -1,12 +1,14 @@
 import { getBlogCategories, getBlogPosts } from "@/lib/blog-data";
 import { getPageMetaRows } from "@/lib/page-meta";
 import { getSitePages } from "@/lib/site-pages";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 
 export default async function DashboardPage() {
+  const supabase = await createSupabaseServerClient();
   const [metaRows, posts, categories] = await Promise.all([
     getPageMetaRows(),
-    getBlogPosts(),
-    getBlogCategories(),
+    getBlogPosts(supabase),
+    getBlogCategories(supabase),
   ]);
   const sitePages = getSitePages();
 

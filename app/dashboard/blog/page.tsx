@@ -1,6 +1,7 @@
 import DeleteConfirmForm from "@/components/dashboard/DeleteConfirmForm";
 import { formatPostDate } from "@/lib/blog-utils";
 import { getBlogCategories, getBlogPosts } from "@/lib/blog-data";
+import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { deletePostAction } from "./actions";
 
 export default async function DashboardBlogPage({
@@ -9,7 +10,11 @@ export default async function DashboardBlogPage({
   searchParams: Promise<{ saved?: string; deleted?: string; error?: string }>;
 }) {
   const params = await searchParams;
-  const [posts, categories] = await Promise.all([getBlogPosts(), getBlogCategories()]);
+  const supabase = await createSupabaseServerClient();
+  const [posts, categories] = await Promise.all([
+    getBlogPosts(supabase),
+    getBlogCategories(supabase),
+  ]);
   const categoryNames = new Map(categories.map((category) => [category.id, category.name]));
 
   return (
