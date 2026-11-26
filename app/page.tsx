@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import PageContent from "@/components/PageContent";
 import { getPageMetadata } from "@/lib/page-meta";
 
@@ -16,5 +17,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
+  preload("/assets/images/banner_bg.webp", {
+    as: "image",
+    fetchPriority: "high",
+  });
   return <PageContent slug="home" />;
 }

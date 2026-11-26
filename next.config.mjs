@@ -1,11 +1,34 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  htmlLimitedBots: /.*/,
+  poweredByHeader: false,
+  compress: true,
   trailingSlash: true,
   experimental: {
     serverActions: {
       bodySizeLimit: "6mb",
     },
+  },
+  async headers() {
+    return [
+      {
+        source: "/assets/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000, stale-while-revalidate=86400",
+          },
+        ],
+      },
+      {
+        source: "/assets/fonts/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
   },
   images: {
     formats: ["image/avif", "image/webp"],

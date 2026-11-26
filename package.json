@@ -9,6 +9,8 @@
     "export": "next build",
     "serve": "npx serve out",
     "env:sync:vercel": "node scripts/sync-vercel-env.mjs",
+    "build:css": "node scripts/build-site-css.mjs",
+    "minify:js": "node scripts/minify-js.mjs",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },
@@ -38,6 +40,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/sanitize-html": "^2.16.2",
+    "purgecss": "^9.1.0",
     "typescript": "^5.7.0"
   }
 }

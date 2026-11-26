@@ -54,3 +54,8 @@ textarea,
 .page-content img {
   max-width: 100%;
 }
+
+/* Legacy theme img{height:auto} is unlayered and overrides layered Tailwind h-* utilities */
+img.h-full {
+  height: 100%;
+}
