@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import "./fonts.css";
+import "./site.css";
 import "./globals.css";
 
 const SITE_URL = "https://bestinterstatemovingandstorage.com";
@@ -40,8 +42,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}/assets/images/banner_bg.webp`,
-        width: 1600,
-        height: 670,
+        width: 1200,
+        height: 675,
         alt: "Best Interstate Moving + Storage hero banner",
       },
     ],
@@ -100,13 +102,26 @@ export default function RootLayout({
         className="bg-white text-slate-900 antialiased"
         suppressHydrationWarning
       >
-        <link rel="stylesheet" href="/assets/css/site.css" precedence="high" />
+        <link
+          rel="preload"
+          href="/assets/fonts/lato/lato-normal-400.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/assets/fonts/lato/lato-normal-700.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-4SZYZETGH5"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
@@ -121,25 +136,8 @@ gtag('config', 'G-4SZYZETGH5');`}
           {children}
           <Footer />
         </main>
-        <Script src="/assets/js/jquery.min.js" strategy="beforeInteractive" />
         <Script
-          src="/assets/js/bootstrap.min.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/assets/js/bootstrap-datepicker.min.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/assets/js/responsiveslides.min.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/assets/js/ie10-viewport-bug-workaround.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          src="/assets/js/site-behavior.js"
+          src="/assets/js/site-behavior.min.js"
           strategy="afterInteractive"
         />
       </body>
