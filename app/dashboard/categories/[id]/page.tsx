@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { getBlogCategoryById } from "@/lib/blog-data";
-import { createSupabaseServerClient } from "@/lib/supabase-server";
 import { saveCategoryAction } from "@/app/dashboard/blog/actions";
 
 export default async function EditCategoryPage({
@@ -12,8 +11,7 @@ export default async function EditCategoryPage({
 }) {
   const { id } = await params;
   const query = await searchParams;
-  const supabase = await createSupabaseServerClient();
-  const category = await getBlogCategoryById(id, supabase);
+  const category = await getBlogCategoryById(id);
 
   if (!category) {
     notFound();

@@ -3,8 +3,6 @@ import { isPublished, POSTS_PER_PAGE, type BlogCategory, type BlogPost } from ".
 
 const postSelect = "*, categories:blog_categories (id, name, slug)";
 
-type SupabaseClient = NonNullable<ReturnType<typeof getSupabaseClient>>;
-
 export async function getPublishedPosts(options?: {
   categorySlug?: string;
   page?: number;
@@ -78,10 +76,8 @@ export async function getRelatedPosts(post: BlogPost, limit = 3): Promise<BlogPo
   return posts.filter((item) => item.id !== post.id).slice(0, limit);
 }
 
-export async function getBlogCategories(
-  client?: SupabaseClient | null,
-): Promise<BlogCategory[]> {
-  const supabase = client ?? getSupabaseClient();
+export async function getBlogCategories(): Promise<BlogCategory[]> {
+  const supabase = getSupabaseClient();
   if (!supabase) {
     return [];
   }
@@ -100,10 +96,8 @@ export async function getBlogCategories(
   return data || [];
 }
 
-export async function getBlogPosts(
-  client?: SupabaseClient | null,
-): Promise<BlogPost[]> {
-  const supabase = client ?? getSupabaseClient();
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const supabase = getSupabaseClient();
   if (!supabase) {
     return [];
   }
@@ -122,11 +116,8 @@ export async function getBlogPosts(
   return data || [];
 }
 
-export async function getBlogPostById(
-  id: string,
-  client?: SupabaseClient | null,
-): Promise<BlogPost | null> {
-  const supabase = client ?? getSupabaseClient();
+export async function getBlogPostById(id: string): Promise<BlogPost | null> {
+  const supabase = getSupabaseClient();
   if (!supabase) {
     return null;
   }
@@ -145,11 +136,8 @@ export async function getBlogPostById(
   return data || null;
 }
 
-export async function getBlogCategoryById(
-  id: string,
-  client?: SupabaseClient | null,
-): Promise<BlogCategory | null> {
-  const supabase = client ?? getSupabaseClient();
+export async function getBlogCategoryById(id: string): Promise<BlogCategory | null> {
+  const supabase = getSupabaseClient();
   if (!supabase) {
     return null;
   }

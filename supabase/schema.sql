@@ -203,11 +203,6 @@ begin
     update public.blog_categories set id = gen_random_uuid() where id is null;
     alter table public.blog_categories add primary key (id);
   end if;
-
-  create unique index if not exists blog_categories_name_key
-    on public.blog_categories (name);
-  create unique index if not exists blog_categories_slug_key
-    on public.blog_categories (slug);
 end $$;
 
 drop trigger if exists blog_categories_set_updated_at on public.blog_categories;
@@ -297,26 +292,6 @@ begin
   ) then
     update public.blog_posts set id = gen_random_uuid() where id is null;
     alter table public.blog_posts add primary key (id);
-  end if;
-
-  create unique index if not exists blog_posts_slug_key
-    on public.blog_posts (slug);
-
-  update public.blog_posts
-    set category_id = null
-    where category_id is not null
-      and not exists (
-        select 1 from public.blog_categories c where c.id = public.blog_posts.category_id
-      );
-
-  if not exists (
-    select 1 from pg_constraint
-    where conname = 'blog_posts_category_id_fkey'
-      and conrelid = 'public.blog_posts'::regclass
-  ) then
-    alter table public.blog_posts
-      add constraint blog_posts_category_id_fkey
-      foreign key (category_id) references public.blog_categories(id) on delete set null;
   end if;
 end $$;
 
